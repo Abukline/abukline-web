@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40" height="40" fill="none">
+  <!--
+    ABUKLINE — Grid Mark · Premium v2.0
+    Mode: Dark (on black / dark backgrounds)
+
+    ┌────────────────────────────────────────┐
+    │  Geometry                              │
+    │  ViewBox:  40 × 40                     │
+    │  Cell:     10 × 10 u                   │
+    │  Gap:      2 u                         │
+    │  Edge:     3 u                         │
+    │  Radius:   1.2 u                       │
+    │  Grid:     34 × 34 u (centered)        │
+    ├────────────────────────────────────────┤
+    │  Opacity System (7 levels)             │
+    │  Blue  1.00 · TC  north star           │
+    │  W     0.70 · TL  established          │
+    │  W     0.55 · MC  core engine          │
+    │  W     0.46 · BR  foundation           │
+    │  W     0.28 · MR  expanding            │
+    │  W     0.14 · TR ML BC  structural     │
+    │  W     0.06 · BL  future              │
+    └────────────────────────────────────────┘
+
+    Cell positions (x, y):
+      Col: 3 · 15 · 27
+      Row: 3 · 15 · 27
+  -->
+
+  <!-- Row 0 — Top -->
+  <rect x="3"  y="3"  width="10" height="10" fill="#EFEFEF" opacity="0.70" rx="1.2"/><!-- TL · Live -->
+  <rect x="15" y="3"  width="10" height="10" fill="#3B82F6"               rx="1.2"/><!-- TC · North Star -->
+  <rect x="27" y="3"  width="10" height="10" fill="#EFEFEF" opacity="0.14" rx="1.2"/><!-- TR · Structural -->
+
+  <!-- Row 1 — Middle -->
+  <rect x="3"  y="15" width="10" height="10" fill="#EFEFEF" opacity="0.14" rx="1.2"/><!-- ML · Structural -->
+  <rect x="15" y="15" width="10" height="10" fill="#EFEFEF" opacity="0.55" rx="1.2"/><!-- MC · Core Engine -->
+  <rect x="27" y="15" width="10" height="10" fill="#EFEFEF" opacity="0.28" rx="1.2"/><!-- MR · Expanding -->
+
+  <!-- Row 2 — Bottom -->
+  <rect x="3"  y="27" width="10" height="10" fill="#EFEFEF" opacity="0.06" rx="1.2"/><!-- BL · Future -->
+  <rect x="15" y="27" width="10" height="10" fill="#EFEFEF" opacity="0.14" rx="1.2"/><!-- BC · Structural -->
+  <rect x="27" y="27" width="10" height="10" fill="#EFEFEF" opacity="0.46" rx="1.2"/><!-- BR · Foundation -->
+
+</svg>

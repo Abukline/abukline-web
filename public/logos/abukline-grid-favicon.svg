@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" fill="none">
+  <!--
+    ABUKLINE — Favicon · Premium v2.0
+    Pixel-precise 16×16 optimized version.
+    Higher contrast on structural cells for legibility at tiny sizes.
+
+    Cell: 4×4, gap: 1, edge: 0.5
+    Col x: 0.5 · 5.5 · 10.5  (→ 0.5, 6, 11.5 visual)
+    Row y: same
+    Radius: 0.5
+  -->
+
+  <!-- Row 0 -->
+  <rect x="0.5"  y="0.5"  width="4" height="4" fill="#EFEFEF" opacity="0.80" rx="0.5"/><!-- TL bright -->
+  <rect x="6"    y="0.5"  width="4" height="4" fill="#3B82F6"               rx="0.5"/><!-- TC blue -->
+  <rect x="11.5" y="0.5"  width="4" height="4" fill="#EFEFEF" opacity="0.18" rx="0.5"/><!-- TR dim -->
+
+  <!-- Row 1 -->
+  <rect x="0.5"  y="6"    width="4" height="4" fill="#EFEFEF" opacity="0.18" rx="0.5"/><!-- ML dim -->
+  <rect x="6"    y="6"    width="4" height="4" fill="#EFEFEF" opacity="0.72" rx="0.5"/><!-- MC active -->
+  <rect x="11.5" y="6"    width="4" height="4" fill="#EFEFEF" opacity="0.36" rx="0.5"/><!-- MR mid -->
+
+  <!-- Row 2 -->
+  <rect x="0.5"  y="11.5" width="4" height="4" fill="#EFEFEF" opacity="0.08" rx="0.5"/><!-- BL ghost -->
+  <rect x="6"    y="11.5" width="4" height="4" fill="#EFEFEF" opacity="0.18" rx="0.5"/><!-- BC dim -->
+  <rect x="11.5" y="11.5" width="4" height="4" fill="#EFEFEF" opacity="0.58" rx="0.5"/><!-- BR anchor -->
+
+</svg>

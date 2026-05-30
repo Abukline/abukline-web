@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024" fill="none">
+  <!--
+    ABUKLINE — App Icon · Premium v2.0
+    1024 × 1024 · Background: #000000
+
+    Grid centered with 30% edge padding:
+    Usable area: 1024 × 0.60 = 614px
+    Scale: 614 / 34 (grid total) ≈ 18.06 per unit
+    Using clean scale of 18:
+      Cell: 180px, Gap: 36px, Edge: 54px
+      Grid total: 3×180 + 2×36 = 612px
+      Start x,y: (1024 - 612) / 2 = 206px
+      Radius: 1.2 × 18 = 21.6px
+
+    Positions (px):
+      Col 0: x=206  Col 1: x=206+180+36=422  Col 2: x=422+180+36=638
+      Row 0: y=206  Row 1: y=422              Row 2: y=638
+  -->
+
+  <rect width="1024" height="1024" fill="#000000"/>
+
+  <!-- Row 0 -->
+  <rect x="206" y="206" width="180" height="180" fill="#EFEFEF" opacity="0.70" rx="21.6"/>
+  <rect x="422" y="206" width="180" height="180" fill="#3B82F6"               rx="21.6"/>
+  <rect x="638" y="206" width="180" height="180" fill="#EFEFEF" opacity="0.14" rx="21.6"/>
+
+  <!-- Row 1 -->
+  <rect x="206" y="422" width="180" height="180" fill="#EFEFEF" opacity="0.14" rx="21.6"/>
+  <rect x="422" y="422" width="180" height="180" fill="#EFEFEF" opacity="0.55" rx="21.6"/>
+  <rect x="638" y="422" width="180" height="180" fill="#EFEFEF" opacity="0.28" rx="21.6"/>
+
+  <!-- Row 2 -->
+  <rect x="206" y="638" width="180" height="180" fill="#EFEFEF" opacity="0.06" rx="21.6"/>
+  <rect x="422" y="638" width="180" height="180" fill="#EFEFEF" opacity="0.14" rx="21.6"/>
+  <rect x="638" y="638" width="180" height="180" fill="#EFEFEF" opacity="0.46" rx="21.6"/>
+
+</svg>
