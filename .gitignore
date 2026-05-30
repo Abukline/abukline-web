@@ -11,11 +11,13 @@
 
 # ─── Environment variables — NEVER commit these ──────────────────────────────
 .env
+.env.*
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
 # .env.local.example is intentionally tracked (template for devs)
+!.env.local.example
 
 # ─── Testing ─────────────────────────────────────────────────────────────────
 /coverage
