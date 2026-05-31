@@ -11,7 +11,7 @@ export default function StatementSection() {
   const isInView = useInView(ref, { once: true, margin: '-8%' })
 
   return (
-    <section className="relative py-16 lg:py-36 overflow-hidden bg-[#0d0d0d] border-y border-white/[0.055]">
+    <section className="relative z-10 py-16 lg:py-36 overflow-hidden bg-[#0d0d0d] border-y border-white/[0.055]">
       {/* Subtle center glow */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[400px] bg-violet-700/[0.05] rounded-full blur-[120px]" />

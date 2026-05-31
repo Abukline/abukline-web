@@ -19,7 +19,7 @@ export default function AboutSection() {
   const isInView = useInView(ref, { once: true, margin: '-8%' })
 
   return (
-    <section id="about" className="relative py-20 lg:py-44 overflow-hidden">
+    <section id="about" className="relative z-10 py-20 lg:py-44 overflow-hidden">
       <div className="absolute inset-0 bg-[#050505]">
         <div className="absolute right-0 top-0 w-[700px] h-[600px] bg-blue-600/[0.04] rounded-full blur-[130px]" />
         <div className="absolute left-0 bottom-0 w-[500px] h-[400px] bg-violet-700/[0.03] rounded-full blur-[110px]" />

@@ -1,7 +1,9 @@
 'use client'
 
-import { createContext, useContext, useState, useCallback, type ReactNode } from 'react'
+import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react'
 import { translations, type Language, type Translations } from '@/locales/translations'
+
+const VALID_LANGS: Language[] = ['en', 'it', 'es']
 
 interface LanguageContextValue {
   lang: Language
@@ -14,16 +16,19 @@ const LanguageContext = createContext<LanguageContextValue | null>(null)
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Language>('en')
 
-  const setLang = useCallback((next: Language) => {
-    setLangState(next)
-    // Persist preference across page refreshes
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('abukline_lang', next)
+  // Hydrate from localStorage after mount (keeps SSR/client renders in sync)
+  useEffect(() => {
+    const saved = localStorage.getItem('abukline_lang') as Language | null
+    if (saved && VALID_LANGS.includes(saved)) {
+      setLangState(saved)
     }
   }, [])
 
-  // Hydrate from localStorage on first render
-  // (done via useEffect to keep SSR clean)
+  const setLang = useCallback((next: Language) => {
+    setLangState(next)
+    localStorage.setItem('abukline_lang', next)
+  }, [])
+
   const t = translations[lang] as Translations
 
   return (

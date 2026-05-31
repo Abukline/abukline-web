@@ -58,7 +58,7 @@ export default function HeroSection() {
   const h = t.hero
 
   return (
-    <section className="relative min-h-[100svh] sm:min-h-screen flex flex-col items-center justify-start sm:justify-center overflow-hidden bg-[#050505]">
+    <section className="relative z-0 min-h-[100svh] sm:min-h-screen flex flex-col items-center justify-start sm:justify-center overflow-hidden bg-[#050505] sm:pt-24 lg:pt-28">
       <Background />
 
       <motion.div
@@ -66,9 +66,11 @@ export default function HeroSection() {
         variants={container}
         initial="hidden"
         animate="show"
-        // Mobile: starts below fixed navbar (pt-[88px]) with bottom breathing room.
-        // Desktop: centered by justify-center, no extra padding needed.
-        className="relative z-10 max-w-6xl mx-auto px-6 text-center flex flex-col items-center w-full pt-[88px] pb-14 sm:pt-0 sm:pb-0"
+        // Mobile: starts below fixed navbar via pt-[88px] on the content wrapper.
+        // Desktop: justify-center centers within the section. The section itself
+        // has sm:pt-24 lg:pt-28 to shift the centering origin below the fixed
+        // navbar (h-16/h-[68px]) and guarantee ≥40px breathing room at all heights.
+        className="relative z-10 max-w-6xl mx-auto px-6 text-center flex flex-col items-center w-full pt-[88px] pb-14 sm:pt-0 sm:pb-20"
       >
 
         {/* ── Badge ── */}
@@ -119,22 +121,24 @@ export default function HeroSection() {
         </motion.p>
 
         {/* ── CTAs ── */}
-        {/* Stack vertically on mobile, side-by-side on sm+.
-            Full-width stretch on mobile for comfortable touch targets. */}
+        {/* Always side-by-side (flex-row). flex-wrap only kicks in on
+            screens < 320px where both buttons genuinely can't fit.
+            whitespace-nowrap prevents label text from breaking mid-word.
+            min-h-[44px] guarantees Apple/WCAG touch-target size. */}
         <motion.div
           variants={item}
-          className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-4 mb-8 sm:mb-14 w-full sm:w-auto"
+          className="flex flex-row flex-wrap items-center justify-center gap-3 sm:gap-4 mb-8 sm:mb-14"
         >
           <a
-            href="#ecosystem"
-            className="group inline-flex items-center justify-center gap-2.5 px-7 sm:px-8 py-3.5 sm:py-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-medium text-sm tracking-wide transition-all duration-300 hover:shadow-[0_0_50px_rgba(59,130,246,0.4)] hover:scale-[1.02]"
+            href="/ecosystem"
+            className="group inline-flex items-center justify-center gap-2.5 px-6 sm:px-8 py-3 sm:py-4 min-h-[44px] rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-medium text-[13px] sm:text-sm tracking-wide transition-all duration-300 hover:shadow-[0_0_50px_rgba(59,130,246,0.4)] hover:scale-[1.02] whitespace-nowrap"
           >
             {h.cta1}
-            <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform duration-300" />
+            <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
           </a>
           <a
-            href="#solutions"
-            className="inline-flex items-center justify-center gap-2 px-7 sm:px-8 py-3.5 sm:py-4 rounded-xl border border-white/[0.09] bg-white/[0.03] hover:bg-white/[0.06] text-white/75 hover:text-white font-medium text-sm tracking-wide transition-all duration-300 backdrop-blur-sm"
+            href="/solutions"
+            className="inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 min-h-[44px] rounded-xl border border-white/[0.09] bg-white/[0.03] hover:bg-white/[0.06] text-white/75 hover:text-white font-medium text-[13px] sm:text-sm tracking-wide transition-all duration-300 backdrop-blur-sm whitespace-nowrap"
           >
             {h.cta2}
           </a>
@@ -209,7 +213,7 @@ export default function HeroSection() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2.0, duration: 0.8 }}
-        className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 sm:gap-2"
+        className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 sm:gap-2 z-10"
       >
         <span className="text-[8px] sm:text-[9px] text-white/18 uppercase tracking-[0.28em]">Scroll</span>
         <div className="w-px h-8 sm:h-10 bg-gradient-to-b from-white/15 to-transparent" />

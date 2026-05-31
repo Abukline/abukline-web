@@ -119,7 +119,7 @@ export default function Navigation() {
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  const hrefs = ['#solutions', '#ecosystem', '#vision', '#projects', '#contact']
+  const hrefs = ['/solutions', '/ecosystem', '/vision', '/projects', '/contact']
 
   return (
     <>
@@ -163,7 +163,7 @@ export default function Navigation() {
               <LanguageSwitcher />
 
               <a
-                href="#contact"
+                href="/contact"
                 className="hidden md:inline-flex items-center px-5 py-2.5 rounded-xl text-sm font-medium text-white border border-white/[0.09] bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/[0.18] transition-all duration-300 tracking-wide"
               >
                 {t.nav.cta}
@@ -213,7 +213,7 @@ export default function Navigation() {
 
               {/* CTA */}
               <a
-                href="#contact"
+                href="/contact"
                 onClick={() => setMobileOpen(false)}
                 className="mt-4 text-center px-5 py-3 rounded-xl text-sm font-medium text-white border border-white/[0.09] bg-white/[0.04] hover:bg-white/[0.07] transition-all duration-200"
               >

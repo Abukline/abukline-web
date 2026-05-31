@@ -17,7 +17,7 @@ export default function PositioningSection() {
   const isInView = useInView(ref, { once: true, margin: '-5%' })
 
   return (
-    <section className="relative py-20 lg:py-44 overflow-hidden">
+    <section className="relative z-10 py-20 lg:py-44 overflow-hidden">
       <div className="absolute inset-0 bg-[#0d0d0d]">
         <div className="absolute inset-0 bg-grid-fine opacity-25" />
         <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent" />

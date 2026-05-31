@@ -73,7 +73,7 @@ export default function ContactSection() {
   }
 
   return (
-    <section id="contact" className="relative py-20 lg:py-40 overflow-hidden">
+    <section id="contact" className="relative z-10 py-20 lg:py-40 overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-[#050505]">
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-blue-950/10 to-transparent" />

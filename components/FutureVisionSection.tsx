@@ -26,7 +26,7 @@ export default function FutureVisionSection() {
     <section
       id="vision"
       ref={sectionRef}
-      className="relative py-20 lg:py-52 overflow-hidden"
+      className="relative z-10 py-20 lg:py-52 overflow-hidden"
     >
       {/* Cinematic background */}
       <div className="absolute inset-0 bg-[#050505]">

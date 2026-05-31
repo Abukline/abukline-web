@@ -31,7 +31,7 @@ export default function ServicesSection() {
   const isInView = useInView(ref, { once: true, margin: '-5%' })
 
   return (
-    <section id="solutions" className="relative py-20 lg:py-44 overflow-hidden">
+    <section id="solutions" className="relative z-10 py-20 lg:py-44 overflow-hidden">
       <div className="absolute inset-0 bg-[#050505]">
         <div className="absolute inset-0 bg-grid opacity-50" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[600px] bg-blue-600/[0.04] rounded-full blur-[160px]" />

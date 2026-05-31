@@ -42,7 +42,7 @@ export default function EcosystemSection() {
   const isInView = useInView(ref, { once: true, margin: '-5%' })
 
   return (
-    <section id="ecosystem" className="relative py-20 lg:py-44 overflow-hidden">
+    <section id="ecosystem" className="relative z-10 py-20 lg:py-44 overflow-hidden">
       <div className="absolute inset-0 bg-[#050505]">
         <div className="absolute inset-0 bg-grid-fine opacity-35" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[700px] bg-violet-700/[0.04] rounded-full blur-[160px]" />
