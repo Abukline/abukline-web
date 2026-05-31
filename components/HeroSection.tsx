@@ -70,7 +70,7 @@ export default function HeroSection() {
         // Desktop: justify-center centers within the section. The section itself
         // has sm:pt-24 lg:pt-28 to shift the centering origin below the fixed
         // navbar (h-16/h-[68px]) and guarantee ≥40px breathing room at all heights.
-        className="relative z-10 max-w-6xl mx-auto px-6 text-center flex flex-col items-center w-full pt-[88px] pb-14 sm:pt-0 sm:pb-20"
+        className="relative z-10 max-w-6xl mx-auto px-6 text-center flex flex-col items-center w-full pt-[88px] pb-28 sm:pt-0 sm:pb-20"
       >
 
         {/* ── Badge ── */}
@@ -169,23 +169,39 @@ export default function HeroSection() {
           ))}
         </motion.div>
 
-        {/* Mobile version: simplified inline list — clear, readable, minimal */}
+        {/* Mobile version: 2×2 grid layout — removes horizontal pressure,
+            keeps all 4 phases readable on narrow viewports (360px / 320px).
+            tracking reduced to [0.07em] — editorial/premium on small text. */}
         <motion.div
           variants={item}
-          className="flex sm:hidden items-center justify-center gap-2.5 mb-6"
+          className="flex sm:hidden flex-col items-center gap-2 mb-10"
         >
-          {h.phases.map((phase, i, arr) => (
-            <div key={i} className="flex items-center gap-2.5">
-              <span className={`text-[9px] uppercase tracking-[0.14em] ${
-                i === 0 ? 'text-blue-400/65' : 'text-white/18'
-              }`}>
-                {phase}
+          {/* Row 1: phases 0 and 1 */}
+          <div className="flex items-center gap-2">
+            <span className="text-[8px] uppercase tracking-[0.07em] text-blue-400/65">
+              {h.phases[0]}
+            </span>
+            <span className="text-white/[0.09] leading-none text-[8px]">·</span>
+            <span className="text-[8px] uppercase tracking-[0.07em] text-white/20">
+              {h.phases[1]}
+            </span>
+          </div>
+          {/* Row 2: phases 2 and 3 */}
+          {h.phases.length > 2 && (
+            <div className="flex items-center gap-2">
+              <span className="text-[8px] uppercase tracking-[0.07em] text-white/13">
+                {h.phases[2]}
               </span>
-              {i < arr.length - 1 && (
-                <span className="text-white/[0.09] leading-none">·</span>
+              {h.phases.length > 3 && (
+                <>
+                  <span className="text-white/[0.06] leading-none text-[8px]">·</span>
+                  <span className="text-[8px] uppercase tracking-[0.07em] text-white/10">
+                    {h.phases[3]}
+                  </span>
+                </>
               )}
             </div>
-          ))}
+          )}
         </motion.div>
 
         {/* ── Ecosystem strip — desktop only ── */}
