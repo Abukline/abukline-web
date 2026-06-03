@@ -5,10 +5,15 @@ import Logo from '@/components/Logo'
 
 const CURRENT_YEAR = new Date().getFullYear()
 
-const groupHrefs = {
-  Company: ['#about', '#ecosystem', '#vision', '#contact'],
-  Systems: ['#solutions', '#solutions', '#solutions', '#solutions', '#solutions'],
-  Group: ['#ecosystem', '#ecosystem', '#ecosystem', '#ecosystem'],
+// Maps each group's labels (in translation order) to the correct page route.
+// Company: About → /ecosystem (AboutSection lives there), Ecosystem → /ecosystem,
+//          Vision & Strategy → /vision, Contact → /contact
+// Systems: all capabilities are on /solutions
+// Group: all divisions are on /ecosystem
+const groupHrefs: Record<string, string[]> = {
+  Company: ['/ecosystem', '/ecosystem', '/vision', '/contact'],
+  Systems: ['/solutions', '/solutions', '/solutions', '/solutions', '/solutions'],
+  Group: ['/ecosystem', '/ecosystem', '/ecosystem', '/ecosystem'],
 }
 
 // Social channels — not yet public. Rendered as non-interactive presence markers.
@@ -30,15 +35,30 @@ export default function Footer() {
 
           {/* Brand column */}
           <div className="sm:col-span-2 lg:col-span-2">
-            {/* Logo */}
-            <Logo size="sm" className="mb-6" />
+
+            {/* Logo — links back to homepage */}
+            <a
+              href="/"
+              aria-label="ABUKLINE — Home"
+              className="inline-block mb-6 rounded-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/25"
+            >
+              <Logo size="sm" />
+            </a>
 
             <p className="text-white/28 text-sm leading-relaxed mb-2 max-w-xs">
               {f.tagline}
             </p>
-            <p className="text-white/16 text-xs leading-relaxed mb-7 max-w-xs">
+            <p className="text-white/16 text-xs leading-relaxed mb-5 max-w-xs">
               {f.sub}
             </p>
+
+            {/* Email contact */}
+            <a
+              href="mailto:hello@abukline.com"
+              className="inline-block text-[11px] text-white/25 hover:text-white/55 transition-colors duration-300 tracking-wide mb-7 rounded-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/25"
+            >
+              hello@abukline.com
+            </a>
 
             {/* Status */}
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/[0.07] bg-white/[0.025] mb-6">
@@ -64,7 +84,7 @@ export default function Footer() {
           {/* Link columns */}
           {(Object.keys(f.groups) as Array<keyof typeof f.groups>).map((group) => {
             const labels = f.groups[group]
-            const hrefs = groupHrefs[group]
+            const hrefs = groupHrefs[group] ?? []
             return (
               <div key={group}>
                 <p className="text-[9px] text-white/22 uppercase tracking-[0.22em] font-medium mb-5">
@@ -74,8 +94,8 @@ export default function Footer() {
                   {labels.map((label, i) => (
                     <li key={i}>
                       <a
-                        href={hrefs[i]}
-                        className="text-sm text-white/30 hover:text-white/65 transition-colors duration-300 tracking-wide"
+                        href={hrefs[i] ?? '/'}
+                        className="text-sm text-white/30 hover:text-white/65 transition-colors duration-300 tracking-wide rounded-sm focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-white/25"
                       >
                         {label}
                       </a>
@@ -99,13 +119,13 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Socials — pre-launch presence, non-interactive */}
-          <div className="flex items-center gap-5">
+          {/* Socials — pre-launch presence, non-interactive.
+              aria-hidden: these carry no actionable purpose for assistive tech. */}
+          <div className="flex items-center gap-5" aria-hidden="true">
             {socials.map((name) => (
               <span
                 key={name}
                 className="group relative text-[10px] text-white/[0.13] tracking-wide cursor-default select-none"
-                aria-label={`${name} — launching soon`}
               >
                 {name}
                 {/* Tooltip */}
