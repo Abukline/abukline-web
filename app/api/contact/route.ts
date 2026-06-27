@@ -82,6 +82,32 @@ function isValidEmail(email: string): boolean {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())
 }
 
+/**
+ * Reads, sanitizes and validates CONTACT_FROM_EMAIL.
+ * Returns the clean address, or null if the value is missing or malformed.
+ * Never passes a broken value to Resend.
+ */
+function resolveFromEmail(): string | null {
+  const raw = process.env.CONTACT_FROM_EMAIL
+  if (!raw?.trim()) {
+    console.warn('[Contact] CONTACT_FROM_EMAIL is not set — falling back to test domain')
+    return 'onboarding@resend.dev'
+  }
+  // Strip control characters (newlines, carriage returns, tabs, zero-width chars)
+  const sanitized = raw.replace(/[\r\n\t\u0000-\u001F\u007F]/g, '').trim()
+  if (!isValidEmail(sanitized)) {
+    console.error(
+      '[Contact] CONTACT_FROM_EMAIL resolved to an invalid email address:',
+      JSON.stringify(raw),
+      '→',
+      JSON.stringify(sanitized),
+      '— confirmation email disabled until this is corrected',
+    )
+    return null
+  }
+  return sanitized
+}
+
 function esc(str: string): string {
   // Escape Markdown special chars for Telegram MarkdownV2
   return str.replace(/[_*[\]()~`>#+\-=|{}.!\\]/g, (c) => `\\${c}`)
@@ -155,7 +181,7 @@ async function sendTelegramNotification(data: ContactPayload): Promise<void> {
 
 // ─── Resend email ─────────────────────────────────────────────────────────────
 
-async function sendConfirmationEmail(data: ContactPayload): Promise<void> {
+async function sendConfirmationEmail(data: ContactPayload, fromEmail: string): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY
   if (!apiKey) throw new Error('RESEND_API_KEY is not set')
 
@@ -174,21 +200,18 @@ async function sendConfirmationEmail(data: ContactPayload): Promise<void> {
     language: lang,
   })
 
-  const fromEmail = process.env.CONTACT_FROM_EMAIL ?? 'onboarding@resend.dev'
-  const replyTo = process.env.CONTACT_REPLY_TO_EMAIL ?? 'hello@abukline.com'
+  const replyTo = process.env.CONTACT_REPLY_TO_EMAIL?.trim() ?? 'hello@abukline.com'
 
-  // When using Resend's test domain (onboarding@resend.dev) emails can only
-  // be delivered to the Resend account owner's email address.
-  // Switch CONTACT_FROM_EMAIL to hello@abukline.com once the domain is verified.
-  const isTestDomain = fromEmail.includes('resend.dev')
-  const fromField = isTestDomain
-    ? fromEmail                      // test domain: use as-is, no display name
-    : `ABUKLINE <${fromEmail}>`      // verified domain: branded display name
+  // fromEmail is pre-validated by resolveFromEmail() — always a clean address here.
+  // Use branded display name for verified domains; plain address for resend.dev.
+  const fromField = fromEmail.includes('resend.dev')
+    ? fromEmail
+    : `ABUKLINE <${fromEmail}>`
 
   const { error } = await resend.emails.send({
     from: fromField,
     to: [data.email],
-    replyTo: replyTo,
+    replyTo,
     subject,
     html,
   })
@@ -274,23 +297,23 @@ export async function POST(req: NextRequest) {
   }
 
   // ── Send confirmation email to user (best-effort, non-blocking) ──
-  // In test mode (resend.dev from address), Resend only delivers to the
-  // verified account owner — skip silently for other recipients.
-  const fromEmail = process.env.CONTACT_FROM_EMAIL ?? 'onboarding@resend.dev'
-  const isTestMode = fromEmail.includes('resend.dev')
+  const fromEmail = resolveFromEmail()
 
-  if (isTestMode) {
+  if (fromEmail === null) {
+    // resolveFromEmail already logged the specific reason — nothing more to do.
+  } else if (fromEmail.includes('resend.dev')) {
+    // Resend test domain: can only deliver to the verified account owner.
+    // Skip for all other recipients to avoid silent failures.
     console.info(
       '[Contact] Resend test mode — confirmation email skipped for:',
       payload.email,
-      '(set CONTACT_FROM_EMAIL to a verified @abukline.com address to enable)',
+      '| To enable: set CONTACT_FROM_EMAIL to a verified @abukline.com address',
     )
   } else {
     try {
-      await sendConfirmationEmail(payload)
+      await sendConfirmationEmail(payload, fromEmail)
     } catch (err) {
       // Non-blocking: lead is already captured via Telegram.
-      // Log as warning, do not surface a 500 to the user.
       console.warn('[Contact] Confirmation email failed (non-blocking):', err)
     }
   }
