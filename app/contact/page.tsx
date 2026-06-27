@@ -4,7 +4,7 @@ import ContactSection from '@/components/ContactSection'
 import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
-  title: 'Contact — ABUKLINE',
+  title: 'Contact ABUKLINE',
   description: 'Get in touch with the ABUKLINE team. Partnerships, projects, and general inquiries.',
 }
 

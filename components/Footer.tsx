@@ -31,10 +31,10 @@ export default function Footer() {
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Main content */}
-        <div className="py-12 lg:py-20 grid sm:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8">
+        <div className="py-12 lg:py-20 grid sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
 
           {/* Brand column */}
-          <div className="sm:col-span-2 lg:col-span-2">
+          <div className="sm:col-span-2 lg:col-span-1">
 
             {/* Logo — links back to homepage */}
             <a
@@ -45,10 +45,10 @@ export default function Footer() {
               <Logo size="sm" />
             </a>
 
-            <p className="text-white/28 text-sm leading-relaxed mb-2 max-w-xs">
+            <p className="text-white/28 text-sm leading-relaxed mb-2">
               {f.tagline}
             </p>
-            <p className="text-white/16 text-xs leading-relaxed mb-5 max-w-xs">
+            <p className="text-white/16 text-xs leading-relaxed mb-5">
               {f.sub}
             </p>
 
@@ -130,7 +130,7 @@ export default function Footer() {
                 {name}
                 {/* Tooltip */}
                 <span className="pointer-events-none absolute -top-7 left-1/2 -translate-x-1/2 whitespace-nowrap px-2 py-0.5 rounded text-[8px] text-white/35 bg-white/[0.05] border border-white/[0.07] uppercase tracking-[0.1em] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  Launching soon
+                  {f.socialTooltip}
                 </span>
               </span>
             ))}

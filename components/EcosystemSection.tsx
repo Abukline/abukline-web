@@ -195,7 +195,7 @@ export default function EcosystemSection() {
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="w-1.5 h-1.5 rounded-full bg-blue-400 shadow-[0_0_6px_rgba(59,130,246,0.8)]" />
-                  <span className="text-[9px] text-blue-400/70 uppercase tracking-widest">Parent</span>
+                  <span className="text-[9px] text-blue-400/70 uppercase tracking-widest">{e.treeParentStatus}</span>
                 </div>
               </div>
             </div>

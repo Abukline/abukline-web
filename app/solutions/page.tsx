@@ -5,7 +5,7 @@ import PositioningSection from '@/components/PositioningSection'
 import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
-  title: 'Solutions — ABUKLINE',
+  title: 'Solutions ABUKLINE',
   description: 'Capabilities and services built across the ABUKLINE ecosystem. Software, platforms, events, analytics, and more.',
 }
 

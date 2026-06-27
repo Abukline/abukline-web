@@ -4,7 +4,7 @@ import ProjectPreviewSection from '@/components/ProjectPreviewSection'
 import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
-  title: 'Projects — ABUKLINE',
+  title: 'Projects ABUKLINE',
   description: 'A look inside the platforms and digital products built across the ABUKLINE ecosystem.',
 }
 

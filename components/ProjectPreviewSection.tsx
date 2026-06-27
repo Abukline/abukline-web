@@ -115,7 +115,7 @@ function EventMockup() {
       <div className="p-4 space-y-3">
         {/* Event cards */}
         {[
-          { name: 'Miami Salsa Fest', date: 'Dec 15', attendees: '1,240', status: 'Live', color: 'emerald' },
+          { name: 'Miami Bailemos Fest', date: 'Dec 15', attendees: '1,240', status: 'Live', color: 'emerald' },
           { name: 'Jazz & Culture Night', date: 'Dec 22', attendees: '380', status: 'Upcoming', color: 'amber' },
           { name: 'New Year\'s Gala', date: 'Dec 31', attendees: '2,800', status: 'Selling', color: 'sky' },
         ].map((event, i) => (

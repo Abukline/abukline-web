@@ -4,7 +4,7 @@ import FutureVisionSection from '@/components/FutureVisionSection'
 import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
-  title: 'Vision — ABUKLINE',
+  title: 'Vision ABUKLINE',
   description: 'The strategic manifesto and long-term vision behind the ABUKLINE ecosystem.',
 }
 

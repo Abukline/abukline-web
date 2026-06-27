@@ -4,8 +4,13 @@
 //
 // Flow:
 //   1. Validate input (name, email, message required; honeypot anti-spam)
-//   2. Send Telegram notification to owner
-//   3. Send HTML confirmation email to user via Resend
+//   2. Send Telegram notification to owner  ← critical path for lead capture
+//   3. Send HTML confirmation email to user ← best-effort, non-blocking
+//      · In test mode (resend.dev domain): skipped — Resend restricts delivery
+//        to the verified account owner only. Set CONTACT_FROM_EMAIL to a
+//        verified @abukline.com address to enable in production.
+//      · In production: attempted; failure logged as warning, not surfaced
+//        to user. Telegram already ensures the lead is captured.
 //   4. Return success / controlled error
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -29,6 +34,46 @@ function checkRateLimit(ip: string): boolean {
   if (entry.count >= RATE_LIMIT) return false
   entry.count++
   return true
+}
+
+// ─── Localized validation messages ───────────────────────────────────────────
+
+type SupportedLang = 'en' | 'it' | 'es'
+
+const msgs: Record<SupportedLang, {
+  name: string
+  email: string
+  messageShort: string
+  messageLong: string
+  rateLimit: string
+}> = {
+  en: {
+    name: 'Name must be at least 2 characters.',
+    email: 'A valid email address is required.',
+    messageShort: 'Message must be at least 10 characters.',
+    messageLong: 'Message must be under 5000 characters.',
+    rateLimit: 'Too many requests. Please try again later.',
+  },
+  it: {
+    name: 'Il nome deve contenere almeno 2 caratteri.',
+    email: 'Inserisci un indirizzo email valido.',
+    messageShort: 'Il messaggio deve contenere almeno 10 caratteri.',
+    messageLong: 'Il messaggio non può superare i 5000 caratteri.',
+    rateLimit: 'Troppe richieste. Riprova più tardi.',
+  },
+  es: {
+    name: 'El nombre debe tener al menos 2 caracteres.',
+    email: 'Introduce una dirección de email válida.',
+    messageShort: 'El mensaje debe tener al menos 10 caracteres.',
+    messageLong: 'El mensaje no puede superar los 5000 caracteres.',
+    rateLimit: 'Demasiadas solicitudes. Por favor, inténtalo más tarde.',
+  },
+}
+
+function resolveLang(lang: string | undefined): SupportedLang {
+  return (['en', 'it', 'es'] as SupportedLang[]).includes(lang as SupportedLang)
+    ? (lang as SupportedLang)
+    : 'en'
 }
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -160,14 +205,7 @@ export async function POST(req: NextRequest) {
     req.headers.get('x-real-ip') ??
     'unknown'
 
-  if (!checkRateLimit(ip)) {
-    return NextResponse.json(
-      { error: 'Too many requests. Please try again later.' },
-      { status: 429 },
-    )
-  }
-
-  // ── Parse body ──
+  // ── Parse body first (needed for language-aware errors) ──
   let body: Record<string, unknown>
   try {
     body = await req.json()
@@ -186,6 +224,12 @@ export async function POST(req: NextRequest) {
     honeypot, // hidden anti-spam field — must be empty
   } = body as Record<string, string | undefined>
 
+  const m = msgs[resolveLang(language)]
+
+  if (!checkRateLimit(ip)) {
+    return NextResponse.json({ error: m.rateLimit }, { status: 429 })
+  }
+
   // ── Honeypot check ──
   if (honeypot) {
     // Silently accept to not reveal the trap
@@ -196,16 +240,16 @@ export async function POST(req: NextRequest) {
   const errors: string[] = []
 
   if (!name?.trim() || name.trim().length < 2) {
-    errors.push('Name must be at least 2 characters.')
+    errors.push(m.name)
   }
   if (!email?.trim() || !isValidEmail(email)) {
-    errors.push('A valid email address is required.')
+    errors.push(m.email)
   }
   if (!message?.trim() || message.trim().length < 10) {
-    errors.push('Message must be at least 10 characters.')
+    errors.push(m.messageShort)
   }
   if (message && message.length > 5000) {
-    errors.push('Message must be under 5000 characters.')
+    errors.push(m.messageLong)
   }
 
   if (errors.length > 0) {
@@ -227,18 +271,28 @@ export async function POST(req: NextRequest) {
     await sendTelegramNotification(payload)
   } catch (err) {
     console.error('[Contact] Telegram notification failed:', err)
-    // Do NOT surface this to the user — email is the critical path
   }
 
-  // ── Send confirmation email (critical) ──
-  try {
-    await sendConfirmationEmail(payload)
-  } catch (err) {
-    console.error('[Contact] Confirmation email failed:', err)
-    return NextResponse.json(
-      { error: 'Failed to send confirmation. Please try again.' },
-      { status: 500 },
+  // ── Send confirmation email to user (best-effort, non-blocking) ──
+  // In test mode (resend.dev from address), Resend only delivers to the
+  // verified account owner — skip silently for other recipients.
+  const fromEmail = process.env.CONTACT_FROM_EMAIL ?? 'onboarding@resend.dev'
+  const isTestMode = fromEmail.includes('resend.dev')
+
+  if (isTestMode) {
+    console.info(
+      '[Contact] Resend test mode — confirmation email skipped for:',
+      payload.email,
+      '(set CONTACT_FROM_EMAIL to a verified @abukline.com address to enable)',
     )
+  } else {
+    try {
+      await sendConfirmationEmail(payload)
+    } catch (err) {
+      // Non-blocking: lead is already captured via Telegram.
+      // Log as warning, do not surface a 500 to the user.
+      console.warn('[Contact] Confirmation email failed (non-blocking):', err)
+    }
   }
 
   return NextResponse.json({ ok: true }, { status: 200 })

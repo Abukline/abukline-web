@@ -139,7 +139,7 @@ export default function FutureVisionSection() {
               >
                 <div className="flex items-center justify-between mb-4">
                   <span className={`text-[10px] font-mono ${i === 0 ? 'text-blue-400/80' : 'text-white/25'} uppercase tracking-widest`}>
-                    Phase {phase.num}
+                    {v.phasePrefix} {phase.num}
                   </span>
                   {i === 0 && (
                     <span className="relative flex h-1.5 w-1.5">
@@ -165,12 +165,13 @@ export default function FutureVisionSection() {
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : { opacity: 0 }}
           transition={{ duration: 1.2, delay: 1.1 }}
-          className="text-center mt-20"
+          className="text-center mt-24 lg:mt-32"
         >
-          <p className="text-white/15 text-xs italic max-w-sm mx-auto leading-relaxed">
+          <div className="w-12 h-px bg-gradient-to-r from-transparent via-white/[0.12] to-transparent mx-auto mb-8" />
+          <p className="text-white/50 text-sm lg:text-base font-light italic max-w-xl mx-auto leading-relaxed">
             {v.finalQuote}
           </p>
-          <p className="text-white/10 text-[9px] uppercase tracking-widest mt-3">{v.finalSource}</p>
+          <p className="text-white/28 text-[10px] uppercase tracking-widest mt-5">{v.finalSource}</p>
         </motion.div>
       </div>
     </section>

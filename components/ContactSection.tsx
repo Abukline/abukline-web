@@ -46,6 +46,24 @@ export default function ContactSection() {
     e.preventDefault()
     if (status === 'loading') return
 
+    // ── Client-side validation (localized) ──
+    const v = c.validation
+    if (!formState.name.trim() || formState.name.trim().length < 2) {
+      setStatus('error')
+      setErrorMsg(v.nameRequired)
+      return
+    }
+    if (!formState.email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formState.email.trim())) {
+      setStatus('error')
+      setErrorMsg(v.emailRequired)
+      return
+    }
+    if (!formState.message.trim() || formState.message.trim().length < 10) {
+      setStatus('error')
+      setErrorMsg(v.messageRequired)
+      return
+    }
+
     setStatus('loading')
     setErrorMsg('')
 
@@ -145,7 +163,7 @@ export default function ContactSection() {
                   </div>
                   <div>
                     <p className="text-white/85 font-semibold text-base mb-2 tracking-tight">
-                      {lang === 'it' ? 'Messaggio ricevuto.' : lang === 'es' ? 'Mensaje recibido.' : 'Message received.'}
+                      {c.successTitle}
                     </p>
                     <p className="text-white/35 text-sm leading-relaxed max-w-xs">
                       {c.success}
@@ -155,7 +173,7 @@ export default function ContactSection() {
                     onClick={() => setStatus('idle')}
                     className="mt-2 text-[10px] text-white/25 uppercase tracking-widest hover:text-white/50 transition-colors duration-200"
                   >
-                    {lang === 'it' ? 'Invia un altro messaggio' : lang === 'es' ? 'Enviar otro mensaje' : 'Send another message'}
+                    {c.retry}
                   </button>
                 </motion.div>
               ) : (
@@ -293,7 +311,7 @@ export default function ContactSection() {
                           <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                         </svg>
                         <span className="text-white/60">
-                          {lang === 'it' ? 'Invio in corso...' : lang === 'es' ? 'Enviando...' : 'Sending...'}
+                          {c.sending}
                         </span>
                       </>
                     ) : (

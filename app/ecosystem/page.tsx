@@ -5,8 +5,8 @@ import EcosystemSection from '@/components/EcosystemSection'
 import Footer from '@/components/Footer'
 
 export const metadata: Metadata = {
-  title: 'Ecosystem — ABUKLINE',
-  description: 'The ABUKLINE group: a multi-vertical ecosystem spanning software, film, events, real estate, food, and more.',
+  title: 'Ecosystem ABUKLINE',
+  description: 'The ABUKLINE group: a technology company with a growing ecosystem spanning software, creative media, events, real estate, and more.',
 }
 
 export default function EcosystemPage() {

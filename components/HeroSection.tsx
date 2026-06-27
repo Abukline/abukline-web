@@ -130,7 +130,7 @@ export default function HeroSection() {
           className="flex flex-row flex-wrap items-center justify-center gap-3 sm:gap-4 mb-8 sm:mb-14"
         >
           <a
-            href="/ecosystem"
+            href="/contact"
             className="group inline-flex items-center justify-center gap-2.5 px-6 sm:px-8 py-3 sm:py-4 min-h-[44px] rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-medium text-[13px] sm:text-sm tracking-wide transition-all duration-300 hover:shadow-[0_0_50px_rgba(59,130,246,0.4)] hover:scale-[1.02] whitespace-nowrap"
           >
             {h.cta1}
@@ -210,7 +210,7 @@ export default function HeroSection() {
           variants={item}
           className="hidden sm:flex items-center gap-5 text-[9px] uppercase tracking-[0.22em] text-white/20"
         >
-          <span className="text-white/10">An ecosystem of</span>
+          <span className="text-white/10">{h.ecosystemIntro}</span>
           {h.ecosystemStrip.map((label, i) => (
             <div key={i} className="flex items-center gap-5">
               <span>{label}</span>
@@ -231,7 +231,7 @@ export default function HeroSection() {
         transition={{ delay: 2.0, duration: 0.8 }}
         className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 sm:gap-2 z-10"
       >
-        <span className="text-[8px] sm:text-[9px] text-white/18 uppercase tracking-[0.28em]">Scroll</span>
+        <span className="text-[8px] sm:text-[9px] text-white/18 uppercase tracking-[0.28em]">{h.scrollLabel}</span>
         <div className="w-px h-8 sm:h-10 bg-gradient-to-b from-white/15 to-transparent" />
         <ChevronDown size={10} className="text-white/15 animate-bounce" />
       </motion.div>

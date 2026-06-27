@@ -114,12 +114,14 @@ export default function PositioningSection() {
               ))}
             </div>
 
-            {/* Brand line footer */}
-            <div className="mt-8 pt-6 border-t border-white/[0.05]">
-              <p className="text-[10px] text-white/18 italic tracking-wide leading-relaxed">
-                "Early-stage by timeline. Not by thinking."
-              </p>
-              <p className="text-[9px] text-white/12 uppercase tracking-widest mt-1.5">— ABUKLINE</p>
+            {/* Brand line footer — grid mirrors contrast rows so quote aligns with the "yes" column */}
+            <div className="mt-8 pt-6 border-t border-white/[0.05] grid grid-cols-[1fr_28px_1fr] gap-3">
+              <div className="col-start-3">
+                <p className="text-[10px] text-white/18 italic tracking-wide leading-relaxed">
+                  {p.brandQuote}
+                </p>
+                <p className="text-[9px] text-white/12 uppercase tracking-widest mt-1.5">ABUKLINE</p>
+              </div>
             </div>
           </motion.div>
         </div>
